@@ -1,11 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
+
 namespace Main
 {
 
     public class Entry
     {
-        public DateTime time = DateTime.Now;
+        public string _time = DateTime.Now.ToString();
         string[] _prompts = {
         "What did you do today?",
         "What is your emotional state?",
@@ -22,6 +24,12 @@ namespace Main
         public Entry()
         {
         }
+        public Entry(string time, string prompt, string userInput)
+        {
+            _time = time;
+            _prompt = prompt;
+            _userInput = userInput;
+        }
 
         public void DisplayPrompt()
         {
@@ -33,10 +41,17 @@ namespace Main
         {
             // inside each list is the date, userInput, prompt.
             string entry = $$"""
-            {{time}}
+            {{_time}}
             {{_prompt}}
             {{_userInput}}
+            
         """;
+            return entry;
+        }
+        public string CreateFormattedString()
+        {
+            // inside each list is the date, userInput, prompt.
+            string entry = $"{_time}~|~{_prompt}~|~{_userInput}";
             return entry;
         }
     }

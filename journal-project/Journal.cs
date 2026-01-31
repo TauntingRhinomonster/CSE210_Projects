@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 namespace Main
 {
     public class Journal
@@ -25,9 +26,47 @@ namespace Main
             int choice = int.Parse(Console.ReadLine());
             return choice;
         }
-        public static void SaveEntry()
+        public void SaveEntry()
         {
-            // Code goes here lol
+            string filename = "myFile.txt";
+
+            using (StreamWriter outputFile = new StreamWriter(filename))
+            {
+                foreach (Entry entry in entries)
+                {
+                    outputFile.WriteLine($"{entry.CreateFormattedString()}");
+                }
+            }
         }
+        public void LoadEntries()
+        {
+            string filename = "myFile.txt";
+            string[] lines = System.IO.File.ReadAllLines(filename);
+
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split("~|~");
+                string time = parts[0];
+                string prompt = parts[1];
+                string userInput = parts[2];
+                Entry entry = new(time, prompt, userInput);
+                entries.Add(entry);
+                // The problem is that there is no separation between each fragment of each entry. 
+                // Entry has a date, a prompt, and a userInput.
+                // There is no way to redisplay what is a date, a prompt, and a userInput
+
+                // public string DisplayEntry()
+                // {
+                //     // inside each list is the date, userInput, prompt.
+                //     string entry = $$"""
+                //     {{time}}
+                //     {{_prompt}}
+                //     {{_userInput}}
+                    
+                // """;
+                //     return entry;
+                // }
+    }
+}
     }
 }
