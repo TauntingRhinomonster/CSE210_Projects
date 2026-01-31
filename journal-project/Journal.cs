@@ -5,7 +5,7 @@ namespace Main
 {
     public class Journal
     {
-        public List<Entry> entries = new();
+        public List<Entry> _entries = new();
         public Journal()
         {
         }
@@ -14,7 +14,7 @@ namespace Main
         {
             // call the function in entires which would be a void funciton which gets all the info for each entry.
             // loop through the list and print each entry.
-            foreach (Entry entry in entries)
+            foreach (Entry entry in _entries)
             {
                 Console.WriteLine(entry.DisplayEntry());
             }
@@ -32,7 +32,7 @@ namespace Main
 
             using (StreamWriter outputFile = new StreamWriter(filename))
             {
-                foreach (Entry entry in entries)
+                foreach (Entry entry in _entries)
                 {
                     outputFile.WriteLine($"{entry.CreateFormattedString()}");
                 }
@@ -40,6 +40,10 @@ namespace Main
         }
         public void LoadEntries()
         {
+            // This first line will make sure that your journal object has nothing in it,
+            // so when you first load the file, it will not duplicate anything if you accidentally
+            // loaded twice in a row.
+            _entries.Clear();
             string filename = "myFile.txt";
             string[] lines = System.IO.File.ReadAllLines(filename);
 
@@ -49,24 +53,13 @@ namespace Main
                 string time = parts[0];
                 string prompt = parts[1];
                 string userInput = parts[2];
-                Entry entry = new(time, prompt, userInput);
-                entries.Add(entry);
+                string userRating = parts[3];
+                Entry entry = new(time, prompt, userInput, userRating);
+                _entries.Add(entry);
                 // The problem is that there is no separation between each fragment of each entry. 
                 // Entry has a date, a prompt, and a userInput.
                 // There is no way to redisplay what is a date, a prompt, and a userInput
-
-                // public string DisplayEntry()
-                // {
-                //     // inside each list is the date, userInput, prompt.
-                //     string entry = $$"""
-                //     {{time}}
-                //     {{_prompt}}
-                //     {{_userInput}}
-                    
-                // """;
-                //     return entry;
-                // }
-    }
-}
+            }
+        }
     }
 }

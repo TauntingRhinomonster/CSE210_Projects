@@ -7,17 +7,18 @@ namespace Main
     {
         public static void Main(string[] Args)
         {
-            Journal journal = new();
+            Journal journal = new Journal();
             int choice = journal.DisplayMenu();
             while (choice != 5)
             {
                 switch (choice)
                 {
                     case 1: // write
-                        Entry entry = new();
+                        Entry entry = new Entry();
                         entry.DisplayPrompt();
                         entry._userInput = Console.ReadLine();
-                        journal.entries.Add(entry);
+                        entry._userRating = Entry.PromptRating();
+                        journal._entries.Add(entry);
                         break;
                     case 2: // display
                         journal.DisplayEntries();

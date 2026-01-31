@@ -20,17 +20,21 @@ namespace Main
     };
         private string _prompt;
         public string _userInput;
-
+        public string _userRating;
+        // This is the constructor for the general creation of an Entry object.
         public Entry()
         {
         }
-        public Entry(string time, string prompt, string userInput)
+        // This is the constructor which is used to recreate Entry objects when the "load" function is selected.
+        public Entry(string time, string prompt, string userInput, string userRating)
         {
             _time = time;
             _prompt = prompt;
             _userInput = userInput;
+            _userRating = userRating;
         }
-
+        // This method will only ever show what the prompt is. After it is loaded in, it will be saved
+        // in the Program.cs switch.
         public void DisplayPrompt()
         {
             int rand = new Random().Next(0, _prompts.Length);
@@ -44,6 +48,7 @@ namespace Main
             {{_time}}
             {{_prompt}}
             {{_userInput}}
+            {{_userRating}}
             
         """;
             return entry;
@@ -51,8 +56,24 @@ namespace Main
         public string CreateFormattedString()
         {
             // inside each list is the date, userInput, prompt.
-            string entry = $"{_time}~|~{_prompt}~|~{_userInput}";
+            string entry = $"{_time}~|~{_prompt}~|~{_userInput}~|~{_userRating}";
             return entry;
+        }
+        public static string PromptRating()
+        {
+            int userResponse = 0;
+            while (userResponse > 10 || userResponse < 1)
+            {
+                Console.WriteLine("On a scale of 1-10, how would you rate your day? ");
+                userResponse = int.Parse(Console.ReadLine());
+                
+                if(userResponse > 10 || userResponse < 1)
+                {
+                    Console.WriteLine("Please choose a number between 0 and 10");
+                }
+            }
+            string userResponseString = $"General Rating of Day: {userResponse}";
+            return userResponseString;
         }
     }
 }
