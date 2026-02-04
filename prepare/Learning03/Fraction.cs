@@ -2,10 +2,24 @@ using System;
 
 class Fraction
 {
-    private int _numerator;
-    private int _denominator;
+    private int _numerator = 1;
+    private int _denominator = 1;
+    private string fraction;
+    // The following are constructors for the fraction class
     public Fraction()
     {
+        fraction = GetFractionString();
+    }
+    public Fraction(int numerator)
+    {
+        _numerator = numerator;
+        fraction = GetFractionString();
+    }
+    public Fraction(int numerator, int denominator)
+    {
+        _numerator = numerator;
+        _denominator = denominator;
+        fraction = GetFractionString();
     }
     // Creating the Get and Set Methods
     public void SetNumerator(int num)
@@ -27,11 +41,17 @@ class Fraction
     // Creating the string of the fraction
     public string GetFractionString()
     {
-        return $"{_numerator}/{_denominator}";
+        return fraction = $"{_numerator}/{_denominator}";
     }
     // Creating the decimal value of the fraction
     public double GetDecimalValue()
     {
-        return _numerator / _denominator;
+        double number = _numerator / (double)_denominator;
+        if (_denominator == 0)
+        {
+            return 0;
+        }
+        // Return the number rounded to the hundredths place
+        return Math.Round(number, 2);
     }
 }
