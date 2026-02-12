@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 
+// When you save, it should prompt the user where they want to save their file. When you load, it should ask the user what file name they want to load.
+
 namespace Main
 {
     public class Program

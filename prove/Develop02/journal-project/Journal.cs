@@ -28,15 +28,17 @@ namespace Main
         }
         public void SaveEntry()
         {
-            string filename = "myFile.txt";
+            Console.WriteLine("What file do you want to save to? Don't include the '.txt' at the end of your name.");
+            string filename = $"{Console.ReadLine()}.txt";
 
-            using (StreamWriter outputFile = new StreamWriter(filename))
+            using (StreamWriter outputFile = new StreamWriter(filename, true))
             {
                 foreach (Entry entry in _entries)
                 {
                     outputFile.WriteLine($"{entry.CreateFormattedString()}");
                 }
             }
+            Console.WriteLine($"Saving Successful! When you open this program again, you can now load your entries in {filename}");
         }
         public void LoadEntries()
         {
@@ -44,7 +46,8 @@ namespace Main
             // so when you first load the file, it will not duplicate anything if you accidentally
             // loaded twice in a row.
             _entries.Clear();
-            string filename = "myFile.txt";
+            Console.WriteLine("What file do you want to load? Don't include the '.txt' at the end of your name.");
+            string filename = $"{Console.ReadLine()}.txt";
             string[] lines = System.IO.File.ReadAllLines(filename);
 
             foreach (string line in lines)
@@ -60,6 +63,7 @@ namespace Main
                 // Entry has a date, a prompt, and a userInput.
                 // There is no way to redisplay what is a date, a prompt, and a userInput
             }
+            Console.WriteLine($"Loading Successful! You can now display your entries that were saved in {filename}");
         }
     }
 }
