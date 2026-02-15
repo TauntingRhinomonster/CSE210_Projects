@@ -16,20 +16,19 @@ class Word
     {
         return _hidden;
     }
+    public void HideWord()
+    {
+        _hidden = true;
+        string blank = "";
+        foreach (char i in _word)
+        {
+            blank += "_";
+        }
+        _word = blank;
+
+    }
     public string GetWord()
     {
-        if (_hidden)
-        {
-            string blank = "";
-            foreach (char i in _word)
-            {
-                blank += "_";
-            }
-            return blank;
-        }
-        else
-        {
-            return _word;
-        }
+        return _word;
     }
 }
