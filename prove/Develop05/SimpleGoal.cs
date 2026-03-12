@@ -6,9 +6,10 @@ class SimpleGoal : Goal
     {        
     }
     // My Special Methods :D
-    public override void CompleteGoal()
+    public override int CompleteGoal()
     {
         isCompleted = true;
+        return GetPoints();
     }
     public override string DisplayGoalStats()
     {
@@ -22,7 +23,7 @@ class SimpleGoal : Goal
     }
     public override string SaveGoalStats()
     {
-        string s = $"SimpleGoal~|~{GetPoints()}~|~{GetName()}~|~{GetDescription()}";
+        string s = $"SimpleGoal~|~{GetPoints()}~|~{GetName()}~|~{GetDescription()}~|~{isCompleted}";
         return s;
     }
 }

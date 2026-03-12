@@ -27,7 +27,7 @@ abstract class Goal
         return _description;
     }
     // My Special Method :D
-    public abstract void CompleteGoal();
+    public abstract int CompleteGoal();
     public abstract string DisplayGoalStats();
     public abstract string SaveGoalStats();
     public void DisplayScore()

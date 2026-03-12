@@ -33,13 +33,26 @@ class ChecklistGoal : Goal
     }
 
     // My Special Methods :D
-    public override void CompleteGoal()
+    public override int CompleteGoal()
     {
-        throw new NotImplementedException();
+        _currentProgress++;
+        if (_currentProgress == _progressGoal)
+        {
+            return GetPoints() + GetBonusPoints();
+        }
+        else
+        {
+            return GetPoints();
+        }
     }
     public override string DisplayGoalStats()
     {
-        string s = $"[X] {GetName()} ({GetDescription()}) -- Currently completed {_currentProgress}/{_progressGoal}";
+        string status = " ";
+        if (_currentProgress >= _progressGoal)
+        {
+            status = "X";
+        }
+        string s = $"[{status}] {GetName()} ({GetDescription()}) -- Currently completed {_currentProgress}/{_progressGoal}";
         return s;
     }
     public override string SaveGoalStats()

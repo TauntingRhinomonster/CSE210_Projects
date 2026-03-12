@@ -81,14 +81,17 @@ class Program
                     DisplayGoalList(goals);
                     break;
                 case 3:
-                    Save(goals);
+                    Save(goals, score);
                     break;
                 case 4:
-                    Load(goals);
+                    Load(goals, ref score);
                     break;
                 case 5:
-                    Record(goals);
-                    score++;
+                    int earned = Record(goals);
+                    score += earned;
+                    Console.WriteLine($"Your total score is now {score}!");
+                    AutoSave(goals, score);
+                    Console.WriteLine("Progress automatically saved to autosave.txt.");
                     break;
                 default:
                     playing = false;
@@ -113,7 +116,7 @@ class Program
         Console.WriteLine($"Menu Options:\n\t1. Simple Goal\n\t2. Eternal Goal\n\t3. Checklist Goal");
         Console.Write("Select a choice from the menu: ");
     }
-    public static void Save(List<Goal> goals)
+    public static void Save(List<Goal> goals, int score)
     {
         // Do the thing
         Console.Write("What would you like to call this file? ");
@@ -122,6 +125,7 @@ class Program
 
         using (StreamWriter outputFile = new StreamWriter(filename, false)) // Add false to overwrite the file each time it saves. FOR TESTING!!!
         {
+            outputFile.WriteLine(score);
             // You can add text to the file with the WriteLine method
             foreach (Goal g in goals)
             {
@@ -130,7 +134,7 @@ class Program
         }
 
     }
-    public static void Load(List<Goal> goals)
+    public static void Load(List<Goal> goals, ref int score)
     {
         // AutoSave??
         goals.Clear();
@@ -140,8 +144,11 @@ class Program
         string filename = $"{userInput}.txt";
         string[] lines = System.IO.File.ReadAllLines(filename);
 
-        foreach (string line in lines)
+        score = int.Parse(lines[0]);
+
+        for (int i = 1; i < lines.Length; i++)
         {
+            string line = lines[i];
             string[] parts = line.Split("~|~");
             // int points, string name, string description, int progressGoal, int bonusPoints, int currentProgress
             string goalType = parts[0];
@@ -163,7 +170,12 @@ class Program
             }
             else if (goalType == "SimpleGoal")
             {
+                bool isCompleted = bool.Parse(parts[4]);
                 SimpleGoal simple = new SimpleGoal(points, name, description);
+                if (isCompleted)
+                {
+                    simple.CompleteGoal();
+                }
                 goals.Add(simple);
             }
         }
@@ -172,7 +184,7 @@ class Program
         Console.WriteLine();
         DisplayGoalList(goals);
     }
-    public static void Record(List<Goal> goals)
+    public static int Record(List<Goal> goals)
     {
         // Oh yeah baby! This is where stuff gets real!
         DisplayGoalList(goals);
@@ -186,7 +198,11 @@ class Program
         }
 
         // Now for the actual mathematical stuff!!! Holy COW!!! It will be happening in this function.
-        goals[choice].CompleteGoal();
+        int actualIndex = choice - 1;
+        int pointsEarned = goals[actualIndex].CompleteGoal();
+        Console.WriteLine($"Congratulations ! You earned {pointsEarned} points!");
+        return pointsEarned;
+
     }
     public static void DisplayGoalList(List<Goal> goals)
     {
@@ -198,6 +214,22 @@ class Program
             Console.Write($"{i}. ");
             Console.WriteLine($"{g.DisplayGoalStats()}");
             i++;
+        }
+    }
+
+    // Stretch Challenge!!!
+    public static void AutoSave(List<Goal> goals, int score)
+    {
+        string filename = "autosave.txt";
+
+        // The 'false' parameter overwrites the file so it only keeps the most recent save
+        using (StreamWriter outputFile = new StreamWriter(filename, false))
+        {
+            outputFile.WriteLine(score);
+            foreach (Goal g in goals)
+            {
+                outputFile.WriteLine($"{g.SaveGoalStats()}");
+            }
         }
     }
 }

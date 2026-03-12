@@ -5,9 +5,9 @@ class EternalGoal : Goal
     {        
     }
     // My Special Methods :D
-    public override void CompleteGoal()
+    public override int CompleteGoal()
     {
-        
+        return GetPoints();
     }
     public override string DisplayGoalStats()
     {
