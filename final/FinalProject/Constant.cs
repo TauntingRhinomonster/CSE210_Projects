@@ -8,6 +8,7 @@ public abstract class Constant
     {
 
     }
+    // My Special Methods :D
     public abstract double GetNumber();
     
 }
