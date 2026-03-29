@@ -1,5 +1,6 @@
-177
+202
 SimpleGoal~|~12~|~Get HW done~|~Programming with Classes Develop05~|~True
 ChecklistGoal~|~10~|~Calculus HW~|~I have 3 Calc modules that need to be completed~|~3~|~100~|~3
 EternalGoal~|~25~|~Attend the Temple~|~Go to the Temple at least once weekly
 SimpleGoal~|~10~|~Dishes~|~Do your freakin dishes dude!~|~True
+SimpleGoal~|~2~|~Homework~|~Do your programming bruv.~|~False
