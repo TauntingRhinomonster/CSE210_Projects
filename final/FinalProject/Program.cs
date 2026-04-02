@@ -27,6 +27,9 @@ class Program
 
         Derivative derivative = new Derivative(equation);
         Console.WriteLine($"The derivative is: {derivative.Display()}");
+
+        Integral integral = new Integral(equation);
+        Console.WriteLine($"The integral is: {integral.Display()}");
     }
 
 

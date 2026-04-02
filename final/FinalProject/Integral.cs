@@ -21,26 +21,39 @@ public class Integral : Equation
             Constant c = t.GetConstant();
             Variable v = t.GetVariable();
             Exponent e = t.GetExponent();
-            // Basically, if there is no exponent just go onto the next "t" in terms
+            
+            double currentPower;
             if (v == null)
             {
+                currentPower = 0.0;
+            }
+            else if (e == null)
+            {
+                currentPower = 1.0;
+            }
+            else
+            {
+                currentPower = e.GetPower();
+            }
+
+            if (v == null)
+            {
+                v = new Variable('x');
+            }
+
+            double currentCoeff = (c != null) ? c.GetNumber() : 1.0;
+            double newPower = currentPower + 1;
+
+            if (newPower == 0)
+            {
+                Console.WriteLine("We cannot integrate -1 yet becuase it requires logorithmic functions... Sorry!");
                 continue;
             }
 
-            // We use Ternary operators to check really quickly if the coefficient is not null. We do the same with the exponent. If it isn't null, we call the GetNumber() method. If it is, we set it equal to 1.0 which is saved as a double.
-            double currentCoeff = (c != null) ? c.GetNumber() : 1.0;
-            double currentPower = (e != null) ? e.GetPower() : 1.0;
+            double newCoeff = currentCoeff / newPower;
 
-            // Do the simple POWER RULE MATH BABY!!!!
-            double newCoeff = currentCoeff * currentPower;
-            double newPower = currentPower - 1;
-            // Now we save that as new variables and add them to the new equation
-            Number newConstant = new(newCoeff);
-            if (newPower == 0)
-            {
-                newEquation.Add(new Term(newConstant));
-            }
-            else if (newPower == 1)
+            Number newConstant = new Number(newCoeff);
+            if (newPower == 1)
             {
                 newEquation.Add(new Term(newConstant, v));
             }
@@ -49,7 +62,10 @@ public class Integral : Equation
                 Exponent newExponent = new Exponent(new Number(newPower));
                 newEquation.Add(new Term(newConstant, v, newExponent));
             }
+
         }
+        Variable constantC = new Variable('C');
+        newEquation.Add(new Term(constantC));
         return newEquation;
     }
 }

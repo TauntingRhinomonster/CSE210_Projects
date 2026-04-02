@@ -12,4 +12,5 @@ public class Variable
     {
         return _letter;
     }
+
 }
