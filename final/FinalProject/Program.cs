@@ -215,7 +215,7 @@ class Program
 
     public static Exponent CreateExponent()
     {
-        int choice = GetNumberInputInRange(1, 3, "Select an option...\n1) Equation\n2) Single Term\n3) Number");
+        int choice = GetNumberInputInRange(1, 3, "Select an option...\n1) Equation\n2) Single Term\n3) Number (Pick this one. The others are what I plan post semester.)");
 
         switch (choice)
         {
