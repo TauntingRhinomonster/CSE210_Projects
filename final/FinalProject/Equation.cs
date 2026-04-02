@@ -5,21 +5,34 @@ using System.Reflection;
 public class Equation
 {
     private List<Term> _equation = new();
+    public int TermCount => _equation.Count;
+
     public Equation()
     {
-        
     }
-
-    // Methods
-    
+    // General Methods :|
+    public List<Term> GetTerms()
+    {
+        return _equation;
+    }
 
     // My Special Methods :D
-    public void Display()
+    public void AddTerm(Term term)
     {
-        
+        if (term != null)
+        {
+            _equation.Add(term);
+        }
     }
-    public string FindCritPoints()
+    public string Display()
     {
-        return "";
+        List<string> termStrings = new List<string>();
+
+        foreach (Term term in _equation)
+        {
+            termStrings.Add(term.Display());
+        }
+
+        return string.Join(" + ", termStrings);
     }
 }

@@ -1,18 +1,18 @@
 using System;
 
-public class Derivative : Equation
+public class Integral : Equation
 {
-    public Derivative(Equation originalEquation)
+    public Integral(Equation originalEquation)
     {
         List<Term> originalTerms = originalEquation.GetTerms();
-        List<Term> newTerms = Derive(originalTerms);
+        List<Term> newTerms = Integrate(originalTerms);
 
         foreach (Term t in newTerms)
         {
             this.AddTerm(t);
         }
     }
-    public static List<Term> Derive(List<Term> terms)
+    public static List<Term> Integrate(List<Term> terms)
     {
         List<Term> newEquation = new List<Term>();
         foreach (Term t in terms)
